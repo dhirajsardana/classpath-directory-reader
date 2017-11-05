@@ -1,13 +1,12 @@
-import edu.rs.poc.JarReader;
-import org.junit.Test;
+import edu.rs.poc.ClasspathDirManager;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class JarReaderTest {
 
-    @Test
+    //@Test
     public void readFromJarTest() throws IOException, URISyntaxException {
-        new JarReader().readingFromJar();
+        new ClasspathDirManager().readFromJarAndCopy("target");
     }
 }

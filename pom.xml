@@ -37,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>edu.rs.poc.JarReaderMain</mainClass>
+                            <mainClass>edu.rs.poc.ClasspathDirManagerMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
