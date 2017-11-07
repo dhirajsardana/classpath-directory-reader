@@ -17,8 +17,14 @@ public class ClasspathDirManager {
         destFile.mkdir();
         URI uri = this.getClass().getClassLoader().getResource(resourceDirPath).toURI();
         Map<String, Object> env = new HashMap<>();
+        Path baseDirPath = null;
         try(FileSystem fs = FileSystems.newFileSystem(uri, env)){
-            Path baseDirPath = fs.provider().getPath(uri);
+            baseDirPath = fs.provider().getPath(uri);
+            //call copy here , otherwise fs will be closed outside try block.
+            copy(baseDirPath, destFile.toString());
+        }catch(Exception e){
+            //In test cases , its getting exception so providing direct resource path.
+            baseDirPath = Paths.get("src/main/resources",resourceDirPath);
             copy(baseDirPath, destFile.toString());
         }
 
