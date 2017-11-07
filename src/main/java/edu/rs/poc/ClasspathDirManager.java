@@ -32,17 +32,26 @@ public class ClasspathDirManager {
 
     // Copy recursively.
     private void copy(Path path, String destPath) throws IOException {
+        Path filePath;
         try(DirectoryStream<Path> stream = Files.newDirectoryStream(path)){
             for(Path pathStream : stream){
                 if(!Files.isDirectory(pathStream)){
-                    Files.copy(pathStream, Paths.get(destPath, pathStream.getFileName().toString()), StandardCopyOption.REPLACE_EXISTING);
+                    filePath = Files.copy(pathStream, Paths.get(destPath, pathStream.getFileName().toString()), StandardCopyOption.REPLACE_EXISTING);
+                    makeFileAccessible(filePath.toFile());
                 } else{
                     File dir = new File(destPath, pathStream.getFileName().toString());
                     dir.mkdir();
+                    makeFileAccessible(dir);
                     copy(pathStream, dir.toString());
                 }
 
             }
         }
+    }
+
+    private void makeFileAccessible(File file){
+        file.setExecutable(true, false);
+        file.setReadable(true, false);
+        file.setWritable(true, false);
     }
 }
